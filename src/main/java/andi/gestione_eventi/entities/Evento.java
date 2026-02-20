@@ -19,13 +19,15 @@ public class Evento {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private UUID id_evento;
+    private String titolo;
     private String descrizione;
     @Column(name="data_evento", nullable = false)
     private LocalDate dataEvento;
     private String luogo;
     private long posti_disponibili;
 
-    public Evento(String descrizione, LocalDate dataEvento, String luogo, long posti_disponibili) {
+    public Evento(String titolo, String descrizione, LocalDate dataEvento, String luogo, long posti_disponibili) {
+        this.titolo = titolo;
         this.descrizione = descrizione;
         this.dataEvento = dataEvento;
         this.luogo = luogo;

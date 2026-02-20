@@ -37,7 +37,7 @@ public class EventoService {
                     );
                 });
 
-        Evento newEvento = new Evento(payload.getDescrizione(),payload.getDataEvento(), payload.getLuogo(), payload.getPosti_disponibili());
+        Evento newEvento = new Evento(payload.getTitolo(),payload.getDescrizione(),payload.getDataEvento(), payload.getLuogo(), payload.getPosti_disponibili());
         Evento savedEvento = this.eventoRepository.save(newEvento);
         log.info("L'evento con luogo " + newEvento.getLuogo() + " del " + newEvento.getDataEvento() + " è stato salvato correttamente con id:" + newEvento.getId_evento());
         return savedEvento;

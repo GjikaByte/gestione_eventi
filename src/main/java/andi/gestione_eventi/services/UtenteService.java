@@ -1,5 +1,6 @@
 package andi.gestione_eventi.services;
 
+import andi.gestione_eventi.entities.Role;
 import andi.gestione_eventi.entities.Utente;
 import andi.gestione_eventi.exceptions.BadRequestException;
 import andi.gestione_eventi.exceptions.NotFoundEmailException;
@@ -39,6 +40,28 @@ public class UtenteService {
         Utente newUtente = new Utente(payload.getUsername(), payload.getNome(), payload.getCognome(), payload.getEmail(), bcrypt.encode(payload.getPassword()));
         Utente savedUtente = this.utenteRepository.save(newUtente);
         log.info("L'utente con Cognome " + savedUtente.getCognome() + " è stato salvato correttamente!");
+        return savedUtente;
+    }
+    public Utente saveOrganizer(UtenteDTO payload) {
+
+        this.utenteRepository.findByEmail(payload.getEmail()).ifPresent(utente -> {
+            throw new BadRequestException("L'email " + utente.getEmail() + " è già in uso!");
+        });
+
+        Utente newUtente = new Utente(
+                payload.getUsername(),
+                payload.getNome(),
+                payload.getCognome(),
+                payload.getEmail(),
+                bcrypt.encode(payload.getPassword())
+        );
+
+        newUtente.setRole(Role.ORGANIZER); 
+
+        Utente savedUtente = this.utenteRepository.save(newUtente);
+
+        log.info("L'organizzatore con Cognome " + savedUtente.getCognome() + " è stato salvato correttamente!");
+
         return savedUtente;
     }
 

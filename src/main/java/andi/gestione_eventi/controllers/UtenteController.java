@@ -28,26 +28,5 @@ public class UtenteController {
         return this.utenteService.save(payload);
     }
 
-    // 2. GET http://localhost:3001/utenti
-    @GetMapping
-    public Page<Utente> findAll(@RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "10") int size,
-                                @RequestParam(defaultValue = "cognome") String orderBy,
-                                @RequestParam(defaultValue = "asc") String sortCriteria) {
 
-        return this.utenteService.findAll(page, size, orderBy, sortCriteria);
-    }
-
-    // 3. GET http://localhost:3001/utenti/{utenteId}
-    @GetMapping("/{utenteId}")
-    public Utente findById(@PathVariable UUID utenteId) {
-        return this.utenteService.findById(utenteId);
-    }
-
-    // 4. DELETE http://localhost:3001/utenti/{utenteId}
-    @DeleteMapping("/{utenteId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findByIdAndDelete(@PathVariable UUID utenteId) {
-        this.utenteService.findByIdAndDelete(utenteId);
-    }
 }
