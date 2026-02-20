@@ -1,0 +1,24 @@
+package andi.gestione_eventi.DTOs;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class UtenteDTO {
+    @NotBlank(message = "Lo username è un campo obbligatorio")
+    @Size(min = 2, max = 10, message = "Lo username deve essere tra i 2 e i 10 caratteri")
+    private String username;
+    @NotBlank(message = "Il nome proprio è un campo obbligatorio")
+    @Size(min = 2, max = 30, message = "Il nome proprio deve essere tra i 2 e i 30 caratteri")
+    private String nome;
+    @NotBlank(message = "Il cognome è un campo obbligatorio")
+    @Size(min = 2, max = 30, message = "Il cognome deve essere tra i 2 e i 30 caratteri")
+    private String cognome;
+    @NotBlank(message = "L'email è obbligatoria")
+    @Email(message = "L'indirizzo email inserito non è nel formato corretto!")
+    private String email;
+}
