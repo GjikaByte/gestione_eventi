@@ -74,10 +74,16 @@ public class PrenotazioneService {
                 .orElseThrow(() -> new NotFoundException(prenotazioneId));
     }
 
-    public void findByIdAndDelete(UUID prenotazioneId) {
-        Prenotazione found = this.findById(prenotazioneId);
-        this.prenotazioneRepository.delete(found);
-        log.info("La prenotazione con id " + prenotazioneId + " è stata eliminata correttamente");
+    public void deletePrenotazioneByUtente(UUID prenotazioneId, UUID utenteId) {
 
+        Prenotazione prenotazione = this.prenotazioneRepository.findById(prenotazioneId)
+                .orElseThrow(() -> new NotFoundException(prenotazioneId));
+
+        if (!prenotazione.getUtente().getId_utente().equals(utenteId)) {
+            throw new BadRequestException("Non puoi eliminare una prenotazione che non hai fatto tu");
+        }
+
+        this.prenotazioneRepository.delete(prenotazione);
+        log.info("La prenotazione con id " + prenotazioneId + " dell'utente " + utenteId + " è stata eliminata correttamente");
     }
 }
