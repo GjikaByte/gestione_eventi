@@ -23,9 +23,9 @@ public class Evento {
     @Column(name="data_evento", nullable = false)
     private LocalDate dataEvento;
     private String luogo;
-    private String posti_disponibili;
+    private long posti_disponibili;
 
-    public Evento(String descrizione, LocalDate dataEvento, String luogo, String posti_disponibili) {
+    public Evento(String descrizione, LocalDate dataEvento, String luogo, long posti_disponibili) {
         this.descrizione = descrizione;
         this.dataEvento = dataEvento;
         this.luogo = luogo;
