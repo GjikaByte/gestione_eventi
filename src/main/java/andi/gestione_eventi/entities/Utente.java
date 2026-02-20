@@ -1,9 +1,6 @@
 package andi.gestione_eventi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +23,8 @@ public class Utente {
     private String cognome;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Utente(String username, String nome, String cognome, String email, String password) {
         this.username = username;
@@ -33,5 +32,7 @@ public class Utente {
         this.cognome = cognome;
         this.email = email;
         this.password = password;
+        this.role=Role.USER;
+
     }
 }

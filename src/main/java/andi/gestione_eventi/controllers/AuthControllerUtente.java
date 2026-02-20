@@ -35,15 +35,8 @@ public class AuthControllerUtente {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Utente createUtente(@RequestBody @Validated UtenteDTO payload, BindingResult validationResult) {
-        // @Validated serve per attivare la validazione, se non lo usiamo è come non farla
 
         if (validationResult.hasErrors()) {
-
-//			String errors = validationResult.getFieldErrors().stream()
-//					.map(fieldError -> fieldError.getDefaultMessage())
-//					.collect(Collectors.joining(". "));
-//
-//			throw new ValidationException(errors);
             List<String> errorsList = validationResult.getFieldErrors()
                     .stream()
                     .map(fieldError -> fieldError.getDefaultMessage())
