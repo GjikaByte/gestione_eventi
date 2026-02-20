@@ -25,11 +25,13 @@ public class Utente {
     private String nome;
     private String cognome;
     private String email;
+    private String password;
 
-    public Utente(String username, String nome, String cognome, String email) {
+    public Utente(String username, String nome, String cognome, String email, String password) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.password = password;
     }
 }
