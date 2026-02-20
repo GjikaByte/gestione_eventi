@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -24,5 +25,7 @@ public class EventoDTO {
     private String luogo;
     @NotNull(message = "I posti disponibili dell'evento e' un campo obbligatorio")
     private long posti_disponibili;
+    @NotNull(message = "L'Id dell'organizzatore e' un campo obbligatorio")
+    private UUID organizerId;
 
 }

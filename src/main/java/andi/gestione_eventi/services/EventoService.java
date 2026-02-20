@@ -1,10 +1,12 @@
 package andi.gestione_eventi.services;
 
 import andi.gestione_eventi.entities.Evento;
+import andi.gestione_eventi.entities.Utente;
 import andi.gestione_eventi.exceptions.BadRequestException;
 import andi.gestione_eventi.exceptions.NotFoundException;
 import andi.gestione_eventi.DTOs.EventoDTO;
 import andi.gestione_eventi.repositories.EventoRepository;
+import andi.gestione_eventi.repositories.UtenteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,10 +22,12 @@ import java.util.UUID;
 public class EventoService {
 
     private final EventoRepository eventoRepository;
+    private final UtenteRepository utenteRepository;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository) {
+    public EventoService(EventoRepository eventoRepository,UtenteRepository utenteRepository) {
         this.eventoRepository = eventoRepository;
+        this.utenteRepository= utenteRepository;
     }
 
     public Evento save(EventoDTO payload) {
@@ -37,7 +41,11 @@ public class EventoService {
                     );
                 });
 
-        Evento newEvento = new Evento(payload.getTitolo(),payload.getDescrizione(),payload.getDataEvento(), payload.getLuogo(), payload.getPosti_disponibili());
+        Utente organizer = utenteRepository.findById(payload.getOrganizerId())
+                .orElseThrow(() -> new NotFoundException(payload.getOrganizerId()));
+
+
+        Evento newEvento = new Evento(payload.getTitolo(),payload.getDescrizione(),payload.getDataEvento(), payload.getLuogo(), payload.getPosti_disponibili(),organizer);
         Evento savedEvento = this.eventoRepository.save(newEvento);
         log.info("L'evento con luogo " + newEvento.getLuogo() + " del " + newEvento.getDataEvento() + " è stato salvato correttamente con id:" + newEvento.getId_evento());
         return savedEvento;
