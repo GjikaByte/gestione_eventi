@@ -5,6 +5,7 @@ import andi.gestione_eventi.entities.Utente;
 import andi.gestione_eventi.exceptions.BadRequestException;
 import andi.gestione_eventi.exceptions.NotFoundException;
 import andi.gestione_eventi.DTOs.EventoDTO;
+import andi.gestione_eventi.exceptions.UnauthorizedException;
 import andi.gestione_eventi.repositories.EventoRepository;
 import andi.gestione_eventi.repositories.UtenteRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +67,15 @@ public class EventoService {
     }
 
 
-    public void findByIdAndDelete(UUID eventoId) {
-        Evento found = this.findById(eventoId);
-        this.eventoRepository.delete(found);
-        log.info("L'evento con id " + eventoId + " è stato eliminato correttamente");
+    public void deleteEventByOrganizer(UUID eventoId, UUID organizerId) {
+
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new NotFoundException(eventoId));
+
+        if (!evento.getOrganizer().getId_utente().equals(organizerId)) {
+            throw new UnauthorizedException("Non puoi eliminare l'evento dato che non ne sei il creatore");
+        }
+
+        eventoRepository.delete(evento);
     }
 }

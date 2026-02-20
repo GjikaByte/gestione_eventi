@@ -88,12 +88,7 @@ public class AuthControllerUtente {
         return this.utenteService.findById(utenteId);
     }
 
-    // DELETE http://localhost:3001/auth/utenti/{utenteId}
-    @DeleteMapping("/organizer/{utenteId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findByIdAndDelete(@PathVariable UUID utenteId) {
-        this.utenteService.findByIdAndDelete(utenteId);
-    }
+
     // POST http://localhost:3001/auth/registerEvent
     @PostMapping("/registerEvent")
     @ResponseStatus(HttpStatus.CREATED)
@@ -118,5 +113,13 @@ public class AuthControllerUtente {
                                 @RequestParam(defaultValue = "asc") String sortCriteria) {
 
         return this.eventoService.findAll(page, size, orderBy, sortCriteria);
+    }
+    // DELETE http://localhost:3001/auth/organizer/{organizerId}/eventi/{eventoId}
+    @DeleteMapping("/organizer/{organizerId}/eventi/{eventoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEvent(@PathVariable UUID organizerId,
+                            @PathVariable UUID eventoId) {
+
+        this.eventoService.deleteEventByOrganizer(eventoId, organizerId);
     }
 }
